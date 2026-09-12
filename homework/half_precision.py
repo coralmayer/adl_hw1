@@ -22,7 +22,7 @@ class HalfLinear(torch.nn.Linear):
         self.requires_grad_(False)
 
         self.weight.data = self.weight.data.to(torch.float16)
-        if self.bias = is not None:
+        if self.bias is not None:
           self.bias.data = self.bias.data.to(torch.float16)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -45,11 +45,11 @@ class HalfBigNet(torch.nn.Module):
         def __init__(self, channels: int):
             super().__init__()
             self.model = torch.nn.Sequential(
-              HalfLinear(channels, channels), 
+              torch.nn.HalfLinear(channels, channels), 
               torch.nn.ReLU(), 
-              HalfLinear(channels, channels),
+              torch.nn.HalfLinear(channels, channels),
               torch.nn.ReLU(),
-              HalfLinear(channels, channels),
+              torch.nn.HalfLinear(channels, channels),
             )
 
         def forward(self, x: torch.Tensor):
