@@ -20,7 +20,10 @@ class QLoRALinear(Linear4Bit):
 
         # TODO: Implement LoRA, initialize the layers, and make sure they are trainable
         # Keep the LoRA layers in float32
-        raise NotImplementedError()
+        self.lora_a = torch.nn.Linear(in_features, lora_dim, bias=False)
+        self.lora_b = torch.nn.Linear(lora_dim, out_features, bias=False)
+
+        self.lora_a = self.
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # TODO: Forward. Make sure to cast inputs to self.linear_dtype and the output back to x.dtype
