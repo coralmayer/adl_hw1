@@ -75,7 +75,6 @@ class Linear4Bit(torch.nn.Module):
             # Load the original weights and remove them from the state_dict (mark them as loaded)
             weight = state_dict[f"{prefix}weight"]  # noqa: F841
             del state_dict[f"{prefix}weight"]
-            # TODO: Quantize the weights and store them in self.weight_q4 and self.weight_norm
             weight_flat = weight.view(-1)
 
             q4, norm = block_quantize_4bit(weight_flat, self._group_size)
@@ -85,7 +84,6 @@ class Linear4Bit(torch.nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         with torch.no_grad():
-            # TODO: Dequantize and call the layer
             # Hint: You can use torch.nn.functional.linear
             w = block_dequantize_4bit(self.weight_q4, self.weight_norm)
 
@@ -103,7 +101,6 @@ class BigNet4Bit(torch.nn.Module):
     class Block(torch.nn.Module):
         def __init__(self, channels):
             super().__init__()
-            # TODO: Implement me (feel free to copy and reuse code from bignet.py)
             self.model = torch.nn.Sequential(
               Linear4Bit(channels, channels),
               torch.nn.ReLU(), 
@@ -117,7 +114,6 @@ class BigNet4Bit(torch.nn.Module):
 
     def __init__(self):
         super().__init__()
-        # TODO: Implement me (feel free to copy and reuse code from bignet.py)
         self.model = torch.nn.Sequential(
           self.Block(BIGNET_DIM),
           LayerNorm(BIGNET_DIM),

@@ -35,10 +35,6 @@ class QLoRALinear(Linear4Bit):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # TODO: Forward. Make sure to cast inputs to self.linear_dtype and the output back to x.dtype
-        # w = block_dequantize_4bit(self.weight_q4, self.weight_norm)
-        # w = w.view(self._shape)
-
-        # base_out = torch.nn.functional.linear(x.to(torch.float32), w, self.bias)
 
         base_out = super().forward(x)
 
@@ -51,7 +47,6 @@ class QLoRABigNet(torch.nn.Module):
     class Block(torch.nn.Module):
         def __init__(self, channels, lora_dim, group_size):
             super().__init__()
-            # TODO: Implement me (feel free to copy and reuse code from bignet.py)
             self.model = torch.nn.Sequential(
               QLoRALinear(channels, channels, lora_dim, group_size),
               torch.nn.ReLU(), 
@@ -65,7 +60,6 @@ class QLoRABigNet(torch.nn.Module):
 
     def __init__(self, lora_dim: int = 32, group_size: int = 16):
         super().__init__()
-        # TODO: Implement me (feel free to copy and reuse code from bignet.py)
         self.model = torch.nn.Sequential(
           self.Block(BIGNET_DIM, lora_dim, group_size),
           LayerNorm(BIGNET_DIM),
