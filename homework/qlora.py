@@ -35,10 +35,12 @@ class QLoRALinear(Linear4Bit):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # TODO: Forward. Make sure to cast inputs to self.linear_dtype and the output back to x.dtype
-        w = block_dequantize_4bit(self.weight_q4, self.weight_norm)
-        w = w.view(self._shape)
+        # w = block_dequantize_4bit(self.weight_q4, self.weight_norm)
+        # w = w.view(self._shape)
 
-        base_out = torch.nn.functional.linear(x.to(torch.float32), w, self.bias)
+        # base_out = torch.nn.functional.linear(x.to(torch.float32), w, self.bias)
+
+        base_out = super().forward(x)
 
         lora_out = self.lora_b(self.lora_a(x.to(torch.float32)))
 
