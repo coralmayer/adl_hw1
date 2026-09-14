@@ -60,11 +60,11 @@ class LoraBigNet(torch.nn.Module):
             super().__init__()
             # TODO: Implement me (feel free to copy and reuse code from bignet.py)
             self.model = torch.nn.Sequential(
-              torch.nn.LoRALinear(channels, channels, lora_dim),
+              LoRALinear(channels, channels, lora_dim),
               torch.nn.ReLU(),
-              torch.nn.LoRALinear(channels, channels, lora_dim),
+              LoRALinear(channels, channels, lora_dim),
               torch.nn.ReLU(), 
-              torch.nn.LoRALinear(channels, channels, lora_dim),
+              LoRALinear(channels, channels, lora_dim),
             )
 
         def forward(self, x: torch.Tensor):
