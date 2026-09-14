@@ -45,11 +45,11 @@ class HalfBigNet(torch.nn.Module):
         def __init__(self, channels: int):
             super().__init__()
             self.model = torch.nn.Sequential(
-              torch.nn.HalfLinear(channels, channels), 
+              HalfLinear(channels, channels), 
               torch.nn.ReLU(), 
-              torch.nn.HalfLinear(channels, channels),
+              HalfLinear(channels, channels),
               torch.nn.ReLU(),
-              torch.nn.HalfLinear(channels, channels),
+              HalfLinear(channels, channels),
             )
 
         def forward(self, x: torch.Tensor):
